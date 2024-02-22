@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct PasswordRow: View {
-    let password: Password
+    @ObservedObject var password: Password
     var body: some View {
         HStack {
             Text(password.id)
