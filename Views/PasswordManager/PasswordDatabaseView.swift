@@ -6,16 +6,18 @@ struct PasswordDatabaseView: View {
     @State var loadedPasswords: [Password] = decodeData()
     var body: some View {
         NavigationSplitView {
-            List (searchResults, id: \.id){ password in
-                NavigationLink {
-                    PasswordView(password: password, passwords: $loadedPasswords)
-                    
-                } label: {
-                    PasswordRow(password: password)
-                        .navigationTitle("Passwords")
-                    
-                    
-                }
+            List {
+                ForEach(searchResults, id: \.id) { password in
+                    NavigationLink {
+                        PasswordView(password: password, passwords: $loadedPasswords)
+                    } label: {
+                        PasswordRow(password: password)
+                            .navigationTitle("Passwords")
+                    }
+                }.onDelete(perform: { indexSet in
+                    loadedPasswords.remove(atOffsets: indexSet)
+                    encodeData(passwords: loadedPasswords)
+                })
             }
             .toolbar {
                 ToolbarItem(placement: .topBarTrailing) {
