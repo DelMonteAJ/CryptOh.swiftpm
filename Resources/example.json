@@ -1,0 +1,15 @@
+{
+  "passwords":
+  [
+    {
+        "id": "Pple.com",
+        "account_name": "Jimmy_D",
+        "password": "sdsf:F"
+    },
+    {
+        "id": "Apple.com",
+        "account_name": "sdf",
+        "password": "SLDFHDSLKFHJDS:F"
+    }
+  ]
+}
