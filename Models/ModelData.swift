@@ -1,5 +1,5 @@
 import Foundation
-var passwords: [Password] = decodeData()
+
 
 
 //func decodeData() -> [Password] {
@@ -22,16 +22,28 @@ var passwords: [Password] = decodeData()
 func decodeData() -> [Password] {
     if let data = UserDefaults.standard.data(forKey: "SavedData") {
         if let decoded = try? JSONDecoder().decode(Passwords.self, from: data) {
-            return decoded.passwords
+            return decoded.passwords.sorted()
         }
     }
     return [Password(id: "Apple.com", account_name: "steve", password: "MrJobsiCEO"), Password(id: "AppleAgain.com", account_name: "timmy", password: "MrCookiCEO")]
 }
 
-func encodeData() -> Bool {
+//func encodeData() -> Bool {
+//    var saveSuccessful = false
+//    if let encoded = try? JSONEncoder().encode(Passwords(passwords: passwords)) {
+//        UserDefaults.standard.set(encoded, forKey: "SavedData")
+//        print(passwords.count)
+//        saveSuccessful = true
+//    }
+//    return saveSuccessful
+//    
+//}
+
+func encodeData(passwords: [Password]) -> Bool {
     var saveSuccessful = false
     if let encoded = try? JSONEncoder().encode(Passwords(passwords: passwords)) {
         UserDefaults.standard.set(encoded, forKey: "SavedData")
+        print(passwords.count)
         saveSuccessful = true
     }
     return saveSuccessful

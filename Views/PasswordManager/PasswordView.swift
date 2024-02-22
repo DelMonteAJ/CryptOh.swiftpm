@@ -2,6 +2,7 @@ import SwiftUI
 
 struct PasswordView: View {
     @ObservedObject var password: Password
+    @Binding var passwords: [Password]
     @State var editingMode: Bool = false
     var body: some View {
         ScrollView {
@@ -21,7 +22,8 @@ struct PasswordView: View {
                     }else{
                         Button("Done") {
                             editingMode = false
-                            print("Save \(encodeData() ? "successful" : "failed")")
+                            print("Save \(encodeData(passwords: passwords) ? "successful" : "failed")")
+                            passwords = passwords.sorted()
                             print("Done editing")
                         }
                     }
