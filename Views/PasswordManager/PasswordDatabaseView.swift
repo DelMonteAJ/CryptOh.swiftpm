@@ -15,8 +15,10 @@ struct PasswordDatabaseView: View {
                             .navigationTitle("Passwords")
                     }
                 }.onDelete(perform: { indexSet in
-                    loadedPasswords.remove(atOffsets: indexSet)
-                    encodeData(passwords: loadedPasswords)
+                    DispatchQueue.global().async {
+                        loadedPasswords.remove(atOffsets: indexSet)
+                        encodeData(passwords: loadedPasswords)
+                    }
                 })
             }
             .toolbar {
@@ -28,10 +30,12 @@ struct PasswordDatabaseView: View {
                         if (loadedPasswords.filter { password in
                             password.id.localizedCaseInsensitiveContains("NewPassword.com")
                         }.count == 0) {
-                            loadedPasswords.insert(Password(id: "NewPassword.com", account_name: "", password: ""), at: 0)
-                            encodeData(passwords: loadedPasswords)
+                            DispatchQueue.global().async {
+                                loadedPasswords.insert(Password(id: "NewPassword.com", account_name: "", password: ""), at: 0)
+                                encodeData(passwords: loadedPasswords)
+                                return
+                            }
                             
-                            return
                         }
                         
                         while (loadedPasswords.filter { password in
@@ -41,7 +45,10 @@ struct PasswordDatabaseView: View {
                         }
                         
                         loadedPasswords.insert(Password(id: "NewPassword.com (\(i))", account_name: "", password: ""), at: 0)
-                        encodeData(passwords: loadedPasswords)
+                        DispatchQueue.global().async {
+                            encodeData(passwords: loadedPasswords)
+                        }
+
 
                     }label: {
                         Image(systemName: "plus")

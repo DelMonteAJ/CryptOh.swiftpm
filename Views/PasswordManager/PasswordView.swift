@@ -22,9 +22,12 @@ struct PasswordView: View {
                     }else{
                         Button("Done") {
                             editingMode = false
-                            print("Save \(encodeData(passwords: passwords) ? "successful" : "failed")")
-                            passwords = passwords.sorted()
-                            print("Done editing")
+                            DispatchQueue.global().async{
+                                print("Save \(encodeData(passwords: passwords) ? "successful" : "failed")")
+                                passwords = passwords.sorted()
+                                print("Done editing")
+                            }
+
                         }
                     }
                 }
