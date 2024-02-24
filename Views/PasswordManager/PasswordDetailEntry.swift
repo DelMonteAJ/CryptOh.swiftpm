@@ -7,6 +7,7 @@ struct PasswordDetailEntry: View {
     var copyable: Bool = false
     var hidden: Bool = false
     @State var currentlyHidden: Bool = false
+    @State var recentlyCopied: Bool = false
     var body: some View {
         VStack {
             HStack {
@@ -17,8 +18,13 @@ struct PasswordDetailEntry: View {
             HStack{
                 if (currentlyHidden){
                     Text("************")
+                        .onTapGesture {
+                            currentlyHidden.toggle()
+                        }
+                        .padding(.top, 5.0)
                 }else{
-                    TextField(title, text: $detail).disabled(!editMode)
+                    TextField(title, text: $detail).disabled(!editMode).autocorrectionDisabled(true)
+                    
                 }
                 Spacer()
                 if (hidden){
@@ -32,9 +38,14 @@ struct PasswordDetailEntry: View {
                     Button {
                         print("Copy me to the clipboard")
                         UIPasteboard.general.string = detail
+                        recentlyCopied = true
+                        DispatchQueue.global().async {
+                            sleep(3)
+                            recentlyCopied = false
+                        }
                     } label: {
-                        Image(systemName: "doc.on.doc")
-                    }
+                        Image(systemName: recentlyCopied ? "checkmark.circle.fill" : "doc.on.doc")
+                    }.padding(.horizontal)
                 }
                 
             }
@@ -42,6 +53,7 @@ struct PasswordDetailEntry: View {
         }
 
     }
+    
 }
 
 //#Preview {

@@ -14,33 +14,6 @@ func cryptoblock(_ input: String) -> String {
     input.components(withMaxLength: 8).joined(separator: "\n")
 }
 
-//func generatePasswords(for targetPassword: String) -> String {
-//    let alphabet = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
-//    let passwordLength = targetPassword.count
-//    
-//    var currentPassword = ""
-//    
-//    // Iterate until a match is found
-//    while true {
-//        // Iterate over each character in the alphabet
-//        for char in alphabet {
-//            // Check if adding the current character creates a match
-//            if currentPassword + String(char) == targetPassword {
-//                return currentPassword + String(char)
-//            }
-//        }
-//        
-//        // Try adding each character from the alphabet
-//        for char in alphabet {
-//            let attempt = currentPassword + String(char)
-//            // Check if the attempt matches the beginning of the target password
-//            if targetPassword.hasPrefix(attempt) {
-//                currentPassword = attempt
-//                break
-//            }
-//        }
-//    }
-//}
 
 func generatePasswords(for targetPassword: String) -> String? {
     let alphabet = "abcdefghijklmnopqrstuvwxyz"
