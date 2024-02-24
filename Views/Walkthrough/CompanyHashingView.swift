@@ -1,10 +1,3 @@
-//
-//  CompanyHashingView.swift
-//  CryptOh?
-//
-//  Created by AJ Nettles on 2/17/24.
-//
-
 import SwiftUI
 
 struct CompanyHashingView: View {

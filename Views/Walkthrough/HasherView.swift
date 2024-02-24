@@ -1,10 +1,3 @@
-//
-//  HasherView.swift
-//  CryptOh?
-//
-//  Created by AJ Nettles on 2/9/24.
-//
-
 import SwiftUI
 
 struct HasherView: View {

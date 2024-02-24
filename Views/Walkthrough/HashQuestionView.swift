@@ -1,10 +1,3 @@
-//
-//  HashQuestionView.swift
-//  CryptOh?
-//
-//  Created by AJ Nettles on 2/17/24.
-//
-
 import SwiftUI
 
 struct HashQuestionView: View {
@@ -24,28 +17,36 @@ struct HashQuestionView: View {
                     Spacer()
                 }
                 Spacer()
-                VStack {
+                VStack (alignment: .center) {
                     HStack {
-                        Image(systemName: "person.fill")
+                        Image(systemName: "rectangle.and.pencil.and.ellipsis")
                             .resizable().aspectRatio(contentMode: .fit).padding(.all)
-                        Image(systemName: "arrowshape.right")
-                            .resizable().aspectRatio(contentMode: .fit).padding(.all)
-                        Image(systemName: "hand.raised.fill")
-                            .resizable().aspectRatio(contentMode: .fit).padding(.all)
-                    }
+                    }.frame(height: 100)
                     
                     HStack {
-                        Image(systemName: "hand.raised.fill")
+                        Spacer()
+                        Image(systemName: "arrowshape.down")
                             .resizable().aspectRatio(contentMode: .fit).padding(.all)
-                        ZStack{
-                            Image(systemName: "arrowshape.right")
-                                .resizable().aspectRatio(contentMode: .fit).padding(.all)
-                            Image(systemName: "xmark")
-                                .resizable().aspectRatio(contentMode: .fit).padding(.all)
-                        }
-                        Image(systemName: "person.fill")
+                        Spacer()
+                        Image(systemName: "arrowshape.down")
                             .resizable().aspectRatio(contentMode: .fit).padding(.all)
-                    }
+                        Spacer()
+                        Image(systemName: "arrowshape.down")
+                            .resizable().aspectRatio(contentMode: .fit).padding(.all)
+                        Spacer()
+    
+                    }.frame(height: 100)
+                    HStack {
+                        Spacer()
+                        Image(systemName: "server.rack").resizable().aspectRatio(contentMode: .fit).padding(.all)
+                        Spacer()
+                        Image(systemName: "server.rack").resizable().aspectRatio(contentMode: .fit).padding(.all)
+                        Spacer()
+                        Image(systemName: "server.rack").resizable().aspectRatio(contentMode: .fit).padding(.all)
+                        Spacer()
+                        
+                    }.frame(height: 100)
+                    
                 }
             }
             Spacer()

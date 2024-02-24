@@ -1,21 +1,5 @@
 import Foundation
 
-//func decodeData() -> [Password] {
-//    if let fileURL = Bundle.main.url(forResource: "example", withExtension: "json") {
-//        do {
-//            let jsonData = try Data(contentsOf: fileURL)
-//            let decoder = JSONDecoder()
-//            let decodedData = try decoder.decode(Passwords.self, from: jsonData)
-//            print(decodedData.passwords)
-//            return decodedData.passwords.sorted()
-//        } catch {
-//            print("Error decoding data: \(error.localizedDescription)")
-//        }
-//    } else {
-//        print("File not found")
-//    }
-//    return []
-//}
 
 func decodeData() -> [Password] {
     if let decoded = try? JSONDecoder().decode(Passwords.self, from: decryptEncryptedData().data(using: .utf8)!) {
@@ -24,29 +8,35 @@ func decodeData() -> [Password] {
     // Should never reach
     return [Password(id: "Apple.com", account_name: "steve", password: "MrJobsiCEO"), Password(id: "AppleAgain.com", account_name: "timmy", password: "MrCookiCEO")]
 }
+func decodePreferences() -> CryptOhPreferences {
+    
+    if let data = UserDefaults.standard.data(forKey: "Preferences") {
+        if let decoded = try? JSONDecoder().decode(CryptOhPreferences.self, from: data) {
+            print("DEcoded: \(decoded)")
+            return decoded
+            
+        }
+        print("Data: \(data)")
+    }
 
-//func encodeData() -> Bool {
-//    var saveSuccessful = false
-//    if let encoded = try? JSONEncoder().encode(Passwords(passwords: passwords)) {
-//        UserDefaults.standard.set(encoded, forKey: "SavedData")
-//        print(passwords.count)
-//        saveSuccessful = true
-//    }
-//    return saveSuccessful
-//    
-//}
+    return CryptOhPreferences(tutorialCompleted: false)
+}
 
-func encodeData(passwords: [Password]) -> Bool {
-    var saveSuccessful = false
+func encodePreferences(preferences: CryptOhPreferences){
+    
+    if let encoded = try? JSONEncoder().encode(preferences) {
+        UserDefaults.standard.set(encoded, forKey: "Preferences")
+        
+    }
+}
+
+func encodeData(passwords: [Password]){
     if let encoded = try? JSONEncoder().encode(Passwords(passwords: passwords)) {
         
-        print(String(data: encoded, encoding: .utf8)!)
+
         UserDefaults.standard.set(encryptDecryptedData(information: String(data:encoded, encoding:.utf8)!), forKey: "SavedData")
         print(passwords.count)
-        saveSuccessful = true
     }
-    return saveSuccessful
-    
 }
 
 func decryptEncryptedData() -> String{

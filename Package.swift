@@ -33,9 +33,9 @@ let package = Package(
                 .portraitUpsideDown(.when(deviceFamilies: [.pad]))
             ],
             capabilities: [
-                .faceID(purposeString: "FaceID will be used to unlock your CryptOh Password Manager.")
+                .faceID(purposeString: "Face ID will be used to unlock your CryptOh Password Manager.")
             ],
-            appCategory: .education
+            appCategory: .utilities
         )
     ],
     targets: [

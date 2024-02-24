@@ -11,7 +11,7 @@ struct PasswordView: View {
                 Divider()
                 PasswordDetailEntry(title: "Account Name", detail: $password.account_name, editMode: $editingMode, copyable: true)
                 Divider()
-                PasswordDetailEntry(title: "Password", detail: $password.password, editMode: $editingMode, copyable: true, hidden: true, currentlyHidden: true)
+                PasswordDetailEntry(title: "Password", detail: $password.password, editMode: $editingMode, copyable: true, hidden: true, allowGeneration: true, currentlyHidden: true)
             }.toolbar {
                 ToolbarItem {
                     if (!editingMode){
@@ -22,12 +22,18 @@ struct PasswordView: View {
                     }else{
                         Button("Done") {
                             editingMode = false
+                            var i = 1
                             DispatchQueue.global().async{
-                                print("Save \(encodeData(passwords: passwords) ? "successful" : "failed")")
-                                passwords = passwords.sorted()
-                                print("Done editing")
+                                while (passwords.filter { password in
+                                    password.id.localizedCaseInsensitiveContains("\($password.id) (\(i))")
+                                }.count > 0){
+                                    i += 1
+                                }
                             }
-
+                            password.id = "\(password.id) (\(i))"
+                            passwords = passwords.sorted()
+                            print("Done editing")
+                            
                         }
                     }
                 }

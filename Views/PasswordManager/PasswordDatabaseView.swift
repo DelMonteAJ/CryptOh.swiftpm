@@ -18,15 +18,12 @@ struct PasswordDatabaseView: View {
                     loggedIn = true
                     loadedPasswords = decodeData()
                     // authenticated successfully
-                } else {
-                    print("OUT")
-                    // there was a problem
                 }
             
             }
         } else {
-            print("NO")
-            // no biometrics
+            loggedIn = true
+            loadedPasswords = decodeData()
         }
     }
     @State private var loggedIn = false
@@ -67,18 +64,19 @@ struct PasswordDatabaseView: View {
                                         return
                                     }
                                     
+                                }else {
+                                    DispatchQueue.global().async {
+                                        while (loadedPasswords.filter { password in
+                                            password.id.localizedCaseInsensitiveContains("NewPassword.com (\(i))")
+                                        }.count > 0){
+                                            i += 1
+                                        }
+                                        
+                                        loadedPasswords.insert(Password(id: "NewPassword.com (\(i))", account_name: "", password: ""), at: 0)
+                                            encodeData(passwords: loadedPasswords)
+                                    }
                                 }
-                                
-                                while (loadedPasswords.filter { password in
-                                    password.id.localizedCaseInsensitiveContains("NewPassword.com (\(i))")
-                                }.count > 0){
-                                    i += 1
-                                }
-                                
-                                loadedPasswords.insert(Password(id: "NewPassword.com (\(i))", account_name: "", password: ""), at: 0)
-                                DispatchQueue.global().async {
-                                    encodeData(passwords: loadedPasswords)
-                                }
+
                                 
                                 
                             }label: {
@@ -102,7 +100,10 @@ struct PasswordDatabaseView: View {
             }else {
                 Button("Login"){
                     authenticate()
-                }.padding(.all, 25).border(Color.green)
+                }.padding(.all, 10).overlay(
+                    RoundedRectangle(cornerRadius: 10) // Adjust the corner radius as needed
+                        .stroke(Color.green, lineWidth: 1) // Add stroke to create a border
+                )
             }
         }.onAppear(perform: authenticate)
     }

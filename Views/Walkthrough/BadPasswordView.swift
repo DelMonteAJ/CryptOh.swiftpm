@@ -1,10 +1,3 @@
-//
-//  PasswordView.swift
-//  CryptOh?
-//
-//  Created by AJ Nettles on 2/10/24.
-//
-
 import SwiftUI
 
 struct BadPasswordView: View {
@@ -61,7 +54,7 @@ struct BadPasswordView: View {
 
                     DispatchQueue.global().async {
                         let startTime = DispatchTime.now()
-                        let generatedPassword = generatePasswords(for: password.lowercased())
+                        let generatedPassword = generateBadPasswords(for: password.lowercased())
                         let endTime = DispatchTime.now()
                         
                         let nanoTime = endTime.uptimeNanoseconds - startTime.uptimeNanoseconds

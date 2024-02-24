@@ -1,10 +1,3 @@
-//
-//  Functions.swift
-//  CryptOh?
-//
-//  Created by AJ Nettles on 2/9/24.
-//
-
 import Foundation
 import CryptoKit
 func generateSHA256(_ input: String) -> String {
@@ -15,7 +8,7 @@ func cryptoblock(_ input: String) -> String {
 }
 
 
-func generatePasswords(for targetPassword: String) -> String? {
+func generateBadPasswords(for targetPassword: String) -> String? {
     let alphabet = "abcdefghijklmnopqrstuvwxyz"
     let passwordLength = targetPassword.count
     
@@ -48,8 +41,6 @@ func generatePasswords(for targetPassword: String) -> String? {
     return nil
 }
 
-//let passwords = 
-
 extension String {
 //https://stackoverflow.com/a/57289245 ~ Wujo
     func components(withMaxLength length: Int) -> [String] {
@@ -59,4 +50,29 @@ extension String {
             return String(self[start..<end])
         }
     }
+    static func randomString(length: Int, allowUppercase: Bool = true, allowNumbers: Bool = true, allowSymbols: Bool = true) -> String {
+        var allowedChars = "abcdefghijklmnopqrstuvwxyz"
+
+        if (allowUppercase){
+            allowedChars += "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+        }
+        if (allowNumbers) {
+            allowedChars += "0123456789"
+        }
+        if (allowSymbols) {
+            allowedChars += "!@#$%^&*"
+        }
+        
+        let allowedCharsCount = allowedChars.count
+        var randomString = ""
+
+        for _ in 0 ..< length {
+            let newCharacter = allowedChars.randomElement()!
+            randomString += String(newCharacter)
+        }
+
+        return randomString
+    }
 }
+
+
