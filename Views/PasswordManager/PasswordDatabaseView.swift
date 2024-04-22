@@ -10,7 +10,7 @@ struct PasswordDatabaseView: View {
         // check whether biometric authentication is possible
         if context.canEvaluatePolicy(.deviceOwnerAuthentication, error: &error) {
             // it's possible, so go ahead and use it
-            let reason = "We are unlocking your CryptOh passwords."
+            let reason = "Your password is being used to decrypt your CryptOh passwords."
 
             context.evaluatePolicy(.deviceOwnerAuthentication, localizedReason: reason) { success, authenticationError in
                 // authentication has now completed
@@ -26,6 +26,7 @@ struct PasswordDatabaseView: View {
             loadedPasswords = decodeData()
         }
     }
+    @Binding var managerShowing: Bool
     @State private var loggedIn = false
     @State private var additionMode: Bool = false
     @State private var searchText: String = ""
@@ -40,7 +41,7 @@ struct PasswordDatabaseView: View {
                                 PasswordView(password: password, passwords: $loadedPasswords)
                             } label: {
                                 PasswordRow(password: password)
-                                    .navigationTitle("Passwords")
+                                    
                             }.deleteDisabled(loadedPasswords.count < 2)
                         }.onDelete(perform: { indexSet in
                             DispatchQueue.global().async {
@@ -48,7 +49,7 @@ struct PasswordDatabaseView: View {
                                 encodeData(passwords: loadedPasswords)
                             }
                         })
-                    }
+                    }.navigationTitle("Passwords")
                     .toolbar {
                         ToolbarItem(placement: .topBarTrailing) {
                             Button {
@@ -98,14 +99,32 @@ struct PasswordDatabaseView: View {
                     Text("Select an account")
                 }.navigationSplitViewStyle(.balanced).searchable(text: $searchText)
             }else {
+                Spacer()
+                Image("CryptOh_LargeTransparent").resizable().aspectRatio(contentMode: .fit).frame(width: 200)
+                Text("CryptOh?")
+                    .foregroundStyle(Color.green)
+                    .font(.custom("Courier", size: 36))
+                    .bold()
+                    .padding(.all, 5)
+                Text("Password Manager")
+                    .foregroundStyle(Color.green)
+                    .font(.custom("Courier", size: 36))
+                    .bold()
+                    .padding(.all, 5)
+                Spacer()
                 Button("Login"){
                     authenticate()
                 }.padding(.all, 10).overlay(
                     RoundedRectangle(cornerRadius: 10) // Adjust the corner radius as needed
                         .stroke(Color.green, lineWidth: 1) // Add stroke to create a border
                 )
+                Button("Return to Main Menu"){
+                    managerShowing = false
+                }
+                .padding(.all)
+                Spacer()
             }
-        }.onAppear(perform: authenticate)
+        }
     }
     
     var searchResults: [Password] {

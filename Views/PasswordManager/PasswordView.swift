@@ -22,15 +22,19 @@ struct PasswordView: View {
                     }else{
                         Button("Done") {
                             editingMode = false
+                            var originalName = true
                             var i = 1
                             DispatchQueue.global().async{
                                 while (passwords.filter { password in
                                     password.id.localizedCaseInsensitiveContains("\($password.id) (\(i))")
                                 }.count > 0){
                                     i += 1
+                                    originalName = false
                                 }
                             }
-                            password.id = "\(password.id) (\(i))"
+                            if (!originalName){
+                                password.id = "\(password.id) (\(i))"
+                            }
                             passwords = passwords.sorted()
                             print("Done editing")
                             

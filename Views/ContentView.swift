@@ -27,7 +27,7 @@ struct ContentView: View {
         }else if (view == 7){
             CompletedTutorialView(page: $view)
         }else if (view == 8){
-            PasswordDatabaseView()
+            TitleView(page: $view, preferences: $preferences, showManager: true)
         }
     }
 }

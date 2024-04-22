@@ -3,7 +3,7 @@ import SwiftUI
 struct TitleView: View {
     @Binding var page: Int
     @Binding var preferences: CryptOhPreferences
-    @State private var showManager: Bool = false
+    @State var showManager: Bool = false
     var body: some View {
         if (!showManager){
             VStack{
@@ -49,7 +49,7 @@ struct TitleView: View {
             }
             
         }else {
-          PasswordDatabaseView()
+            PasswordDatabaseView(managerShowing: $showManager)
         }
 
     }
