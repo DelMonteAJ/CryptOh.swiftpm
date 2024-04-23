@@ -8,7 +8,7 @@ This app was submitted to Apple's Swift Student Challenge for 2024.
 - [Installation](#installation)
 - [Features](#features)
 - [Contributing](#contributing)
-- [License](#license)
+
 
 ## Installation
 To use CryptOh
